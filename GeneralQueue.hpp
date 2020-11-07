@@ -71,7 +71,7 @@ class Queue {
 			}
 			else {
 				size_t data_size = size();
-				Q *data_copy = new Q[data_copy];
+				Q *data_copy = new Q[data_size];
 				size_t i;
 				for (i=0; i<data_size; i++) {
 					*(data_copy + i) = *(_data + i);
@@ -103,7 +103,7 @@ class Queue {
 				Q *data_copy = new Q[data_size - 1];
 				size_t i;
 				for (i=1; i<data_size; i++) {
-					*(data_copy + i) = *(_data + i);
+					*(data_copy + i-1) = *(_data + i);
 				}
 
 				delete [] _data;
@@ -164,7 +164,7 @@ class Queue {
 				Q q_data_copy = new Q[q_size];
 				size_t i;
 				for (i=0; i<q_size; i++) {
-					*(data_copy + i) = *(q._data + i);
+					*(q_data_copy + i) = *(q._data + i);
 				}
 
 				if (size() == 1) {
@@ -176,7 +176,7 @@ class Queue {
 
 				_data = new Q[q_size];
 				for (i=0; i<q_size; i++) {
-					*(_data + i) = *(data_copy + i);
+					*(_data + i) = *(q_data_copy + i);
 				}
 
 				_size = q_size;
@@ -187,7 +187,7 @@ class Queue {
 
 		template <typename T>
 		friend std::ostream &operator<<(std::ostream &out, const Queue<T> &q) {
-				for (i=0; i<q.size(); i++) {
+				for (size_t i=0; i<q.size(); i++) {
 					out << *(q._data + i) << ' ';
 				}
 				return out;
@@ -208,8 +208,8 @@ bool operator==(const Queue<T> &a, const Queue<T> &b) {
 		return false;
 	}
 
-	for (i=0; i<b.size(); i++) {
-		if ( (*(a._data + i) != (*(b._data + i))) {
+	for (size_t i=0; i<b.size(); i++) {
+		if ( (*(a._data + i)) != (*(b._data + i))) {
 			return false;
 		}
 	}
